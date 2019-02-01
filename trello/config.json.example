@@ -1,0 +1,12 @@
+{
+  "Trello": {
+    "KEY": "...",
+    "TOKEN": "...",
+    "BOARDID": "...",
+    "LISTNAME": "..."
+  },
+  "GitHub": {
+    "USER": "...",
+    "TOKEN": "..."
+  }
+}
