@@ -10,6 +10,8 @@ Notes: Empty for now, but a place where you can add notes when you import the da
 
 Usage: pipenv run python get_pr_details.py
 
+It will write the data into output.csv
+
 A sample config file is provided for options you need to provide.  Copy config,json.example to config.json, and provide:
 
 Trello KEY: [You Trello API key](https://trello.com/app-key)
