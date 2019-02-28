@@ -6,43 +6,17 @@
 #
 # See config.json.example for the input variables you need to provide.
 
-import configparser, requests, json, re
+import requests, json, re
+from trello import Trello
 
 with open("config.json", "r") as f:
   config = json.load(f)
 
-trello_config = config["Trello"]
+trello = Trello(config["Trello"])
 
-lists_url = "https://api.trello.com/1/boards/{}/lists"
-lists_url = lists_url.format(trello_config['BOARDID'])
+list_id = trello.get_list_id(name=config["Trello"]["LISTNAME"])
 
-querystring = {"cards":"open","card_fields":"all","fields":"all",
-               "key":trello_config["KEY"],"token":trello_config["TOKEN"]}
-
-response = requests.request("GET", lists_url, params=querystring)
-if response.status_code != 200:
-  exit("Trello Request Error getting list: {}".format(response.status_code))
-
-list_id = ""
-list_name = trello_config["LISTNAME"]
-for list in json.loads(response.text):
-  if list["name"] == list_name: 
-    list_id = list["id"]
-    break
-
-if list_id == "": exit("Couldn't find list: {}".format(list_name))
-
-cards_url = "https://api.trello.com/1/lists/{}/cards".format(list_id)
-
-querystring = { "attachments":"true",
-                "attachment_fields":"all",
-                "key":trello_config["KEY"],
-                "limit":1000,
-                "token":trello_config["TOKEN"]}
-
-cards = requests.request("GET", cards_url, params=querystring)
-if cards.status_code != 200:
-  exit("Trello Request Error getting cards: {}".format(cards.status_code))
+cards = trello.get_cards_in_list(list_id=list_id)
 
 urls = []
 for card in json.loads(cards.text):
