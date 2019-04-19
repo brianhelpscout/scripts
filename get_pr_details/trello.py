@@ -33,6 +33,7 @@ class Trello:
         cards_url = "https://api.trello.com/1/lists/{}/cards".format(list_id)
 
         querystring = {
+                       "attachments": "true",
                        "attachment_fields": "all",
                        "key": self.key,
                        "limit": 1000,

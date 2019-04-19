@@ -67,12 +67,12 @@ from datetime import datetime
 
 def get_date(input):
   date_obj = datetime.strptime(input, "%Y-%m-%dT%H:%M:%SZ")
-  return datetime.strftime(date_obj, "%m/%d")
+  return datetime.strftime(date_obj, "%m/%d/%Y")
 
 output = open("output.csv", "w")
 output.write("PR,Author,Opened,Closed/Merged,Notes\n")
 for result in results:
-  output.write("{} {}".format(result["url"], result["title"]))
+  output.write("\"{} {}\"".format(result["url"], result["title"]))
   output.write(",")
   output.write(result["author"])
   output.write(",")
